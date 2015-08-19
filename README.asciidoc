@@ -1,0 +1,27 @@
+Buxfer
+------
+
+Buxfer downloads transactions as a csv format. This is cool. Buxfer also allows to tag transactions. This is cooler. Buxfer also allows to split the same transaction under various tags and allows to assign values to each tag. This is even cooler.
+
+Here is an example of the csv:
+----
+Date,Description,Currency,Amount,Type,Tags,Account,Status
+2015-08-17,"Costco Whse #0 08/15 #000669001",$,"+ 12.99",Expense,grocery,"BofA Core Checking - 7121",Cleared
+----
+
+When a transaction with multiple tags gets dumped, we see this:
+----
+2015-07-28,"T-Mobile.Com*Payment 800-937-899: 800-937-899",$,"+ 115.24",Expense,"Telephone:57.5,friends transaction:57.74","BankAmericard Cash Rewards Signature Visa - xxxx",Cleared
+----
+
+So, what's up?
+--------------
+
+Well, the problem is that we can't sort the rows quickly. Ideally we would like the above listed like this:
+
+----
+2015-07-28,"T-Mobile.Com*Payment 800-937-899: 800-937-899",$,"+ 57.5",Expense,"Telephone","BankAmericard Cash Rewards Signature Visa - xxxx",Cleared
+2015-07-28,"T-Mobile.Com*Payment 800-937-899: 800-937-899",$,"+ 57.74",Expense,"friends transaction","BankAmericard Cash Rewards Signature Visa - xxxx",Cleared
+----
+
+This script is to convert all such occurences into individual entries by themselves, sum and present the entires.
