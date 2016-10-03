@@ -14,11 +14,10 @@ def add_to_tag(tag_split,tag,amount,detail):
 
 with open("transactions.csv","rb") as csfile:
   values = csv.reader(csfile)
-  # skip first 2 lines always
-  next(values)
+  # skip first line always
   next(values)
   for transaction in values:
-    date,description,currency,amount,type,tag,account,status = transaction
+    date,description,currency,amount,type,tag,account,status,memo = transaction
     if type != "Expense":
       continue
     tag_elements = tag.split(',')
