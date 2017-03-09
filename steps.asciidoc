@@ -1,0 +1,25 @@
+Steps To Do
+===========
+
+* Download all transactions from Buxfer - you will get a transactions.csv
+* Run
++
+----
+buxfer.py > check.csv
+----
++
+You might typically get warnings on unpacking if buxfer added/removed fields in csv. Fix them.
++
+* Extract the untagged ones seperately
++
+----
+sed -n '/^Tag: $/,/^Tag:/p' check.csv  | grep -v 'Tag:' > untagged
+----
++
+* Extract the tags
++
+----
+grep 'Tag:' check.csv > tags
+----
++
+* Finish taggging.

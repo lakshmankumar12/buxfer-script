@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import csv
+import sys
 
 tag_split = {}
 
@@ -18,7 +19,12 @@ with open("transactions.csv","rb") as csfile:
   next(values)
   next(values)
   for transaction in values:
-    date,description,currency,amount,type,tag,account,status = transaction
+    try:
+       #Date,Description,Currency,Amount,Type,Tags,Account,Status,Memo,Loans
+       date,description,currency,amount,type,tag,account = transaction[:7]
+    except ValueError as e:
+        print "Got valueError in line:%s, err:%s"%(transaction, str(e))
+        sys.exit(1)
     if type != "Expense":
       continue
     tag_elements = tag.split(',')
@@ -33,15 +39,16 @@ with open("transactions.csv","rb") as csfile:
     else:
       add_to_tag(tag_split,tag,amount,[date,description])
 
-for i in tag_split:
+sorted_tags = tag_split.keys()
+sorted_tags.sort(key=lambda tag: tag_split[tag][0])
+
+for i in sorted_tags:
   print "Tag: %s"%i
   items = tag_split[i][1]
   items.sort(key=lambda i: i[2])
   for j in tag_split[i][1]:
     print "  %-20s %15.2lf %s"%(j[0],j[2],j[1])
 
-sorted_tags = tag_split.keys()
-sorted_tags.sort(key=lambda tag: tag_split[tag][0])
 for i in sorted_tags:
   print "%-30s  %15.2lf"%(i,tag_split[i][0])
 
