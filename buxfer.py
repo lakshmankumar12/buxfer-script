@@ -15,8 +15,7 @@ def add_to_tag(tag_split,tag,amount,detail):
 
 with open("transactions.csv","rb") as csfile:
   values = csv.reader(csfile)
-  # skip first 2 lines always
-  next(values)
+  # skip first line always
   next(values)
   for transaction in values:
     try:
